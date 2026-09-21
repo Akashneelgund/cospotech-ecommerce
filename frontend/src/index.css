@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    @apply bg-[#FCFAF5] text-slate-800 font-sans antialiased selection:bg-vedic-gold selection:text-slate-900;
+  }
+
+  /* Custom subtle luxury scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #F1F5F9;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #CBD5E1;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #D4AF37;
+  }
+}
+
+@layer utilities {
+  .text-shadow-gold {
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+  }
+  .bg-radial-vignette {
+    background: radial-gradient(circle, rgba(15, 23, 42, 0) 50%, rgba(8, 12, 22, 0.8) 100%);
+  }
+  .gold-gradient-text {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-vedic-lightgold via-vedic-gold to-amber-400;
+  }
+}
+
+@media print {
+  body {
+    background-color: white !important;
+  }
+}
