@@ -5,6 +5,10 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import path from 'path';
 import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
@@ -61,7 +65,7 @@ app.use('/api/marketing', marketingRoutes);
 const clientDistCandidates = [
   path.resolve(process.cwd(), 'frontend/dist'),
   path.resolve(process.cwd(), '../frontend/dist'),
-  path.resolve(import.meta.dirname || '', '../../frontend/dist')
+  path.resolve(__dirname, '../../frontend/dist')
 ];
 const clientDistPath = clientDistCandidates.find((p) => fs.existsSync(p));
 
