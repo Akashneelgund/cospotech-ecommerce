@@ -23,6 +23,7 @@ import adminRoutes from './routes/admin.js';
 import uploadRoutes from './routes/upload.js';
 import bannerRoutes from './routes/banners.js';
 import marketingRoutes from './routes/marketing.js';
+import { prisma } from './config/prisma.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -40,13 +41,25 @@ app.use(morgan('dev'));
 
 app.use('/uploads', express.static(path.resolve(process.cwd(), 'uploads')));
 
-app.get('/api/health', (_req, res) => {
-  res.json({
-    status: 'healthy',
-    platform: 'VedicVeda Luxury Sacred E-Commerce Platform',
-    timestamp: new Date().toISOString(),
-    version: '1.0.0'
-  });
+app.get('/api/health', async (_req, res) => {
+  try {
+    const productCount = await prisma.product.count();
+    res.json({
+      status: 'healthy',
+      platform: 'Cospotech Luxury Sacred E-Commerce Platform',
+      database: 'connected',
+      productsInDb: productCount,
+      timestamp: new Date().toISOString(),
+      version: '1.0.0'
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      status: 'database_error',
+      platform: 'Cospotech Luxury Sacred E-Commerce Platform',
+      error: err.message,
+      timestamp: new Date().toISOString()
+    });
+  }
 });
 
 app.use('/api/auth', authRoutes);
@@ -87,7 +100,13 @@ app.use((err: any, _req: express.Request, res: express.Response, _next: express.
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`🕉️  VedicVeda API Server running on port ${PORT}`);
+app.listen(PORT, async () => {
+  console.log(`🕉️  Cospotech API Server running on port ${PORT}`);
   console.log(`✨ Health Check: http://localhost:${PORT}/api/health`);
+  try {
+    const productCount = await prisma.product.count();
+    console.log(`📦 Active Products in Database: ${productCount}`);
+  } catch (err: any) {
+    console.error('⚠️ Database verification error:', err?.message);
+  }
 });

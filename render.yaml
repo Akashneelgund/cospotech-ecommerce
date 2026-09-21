@@ -13,6 +13,6 @@ services:
       - key: PORT
         value: 10000
       - key: DATABASE_URL
-        value: file:./prisma/dev.db
+        value: file:./backend/prisma/dev.db
       - key: JWT_SECRET
         generateValue: true

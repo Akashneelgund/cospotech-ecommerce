@@ -96,7 +96,7 @@ export const getProducts = async (req: Request, res: Response): Promise<void> =>
     });
   } catch (error: any) {
     console.error('getProducts error:', error);
-    res.status(500).json({ success: false, message: 'Failed to fetch products.' });
+    res.status(500).json({ success: false, message: 'Failed to fetch products.', error: error?.message || String(error) });
   }
 };
 
@@ -203,7 +203,7 @@ export const getCategories = async (_req: Request, res: Response): Promise<void>
     res.json({ success: true, categories });
   } catch (error: any) {
     console.error('getCategories error:', error);
-    res.status(500).json({ success: false, message: 'Failed to fetch categories.' });
+    res.status(500).json({ success: false, message: 'Failed to fetch categories.', error: error?.message || String(error) });
   }
 };
 

@@ -8,7 +8,7 @@
   },
   "scripts": {
     "install:all": "npm --prefix backend install && npm --prefix frontend install",
-    "build": "npm --prefix frontend install && npm --prefix frontend run build && npm --prefix backend install && npm --prefix backend run build",
+    "build": "node -e \"const fs=require('fs'); if(!fs.existsSync('prisma')) fs.mkdirSync('prisma'); if(fs.existsSync('backend/prisma/dev.db') && !fs.existsSync('prisma/dev.db')) fs.copyFileSync('backend/prisma/dev.db', 'prisma/dev.db');\" && npm --prefix frontend install && npm --prefix frontend run build && npm --prefix backend install && npm --prefix backend run build",
     "start": "node backend/dist/index.js",
     "dev:backend": "npm --prefix backend run dev",
     "dev:frontend": "npm --prefix frontend run dev"
